@@ -10,6 +10,11 @@ class ViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+            modelClass.isAssignableFrom(com.example.presentation.screens.AuthViewModel::class.java) -> {
+                com.example.presentation.screens.AuthViewModel(
+                    authRepository = appContainer.authRepository
+                ) as T
+            }
             modelClass.isAssignableFrom(com.example.presentation.screens.FoundationDashboardViewModel::class.java) -> {
                 com.example.presentation.screens.FoundationDashboardViewModel(
                     expenseRepository = appContainer.expenseRepository,
