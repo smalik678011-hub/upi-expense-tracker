@@ -134,6 +134,8 @@ dependencies {
   implementation(libs.androidx.room.runtime)
   // implementation(libs.coil.compose)
   implementation(libs.converter.moshi)
+  implementation(libs.firebase.auth)
+  implementation(libs.firebase.firestore)
   implementation(libs.firebase.ai)
   implementation(libs.firebase.appcheck.recaptcha)
   implementation(libs.kotlinx.coroutines.android)
@@ -174,4 +176,3 @@ tasks.withType<Test> {
     showStandardStreams = true
   }
 }
-
