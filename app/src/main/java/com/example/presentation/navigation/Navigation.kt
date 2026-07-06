@@ -15,6 +15,8 @@ import com.example.presentation.screens.*
 
 sealed class Screen(val route: String) {
     object StartupRouter : Screen("startup_router")
+    object Login : Screen("login")
+    object Signup : Screen("signup")
     object Onboarding : Screen("onboarding")
     object Permission : Screen("permission")
     object Privacy : Screen("privacy")
@@ -64,8 +66,43 @@ fun AppNavigation(
                     }
                 },
                 onNavigateToHome = {
-                    navController.navigate(Screen.Home.route) {
+                    val targetRoute = if (appContainer.sessionManager.isSignedIn) {
+                        Screen.Home.route
+                    } else {
+                        Screen.Login.route
+                    }
+                    navController.navigate(targetRoute) {
                         popUpTo(Screen.StartupRouter.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Screen.Login.route) {
+            val authViewModel: AuthViewModel = viewModel(factory = factory)
+            LoginScreen(
+                viewModel = authViewModel,
+                onNavigateToSignup = {
+                    navController.navigate(Screen.Signup.route)
+                },
+                onAuthSuccess = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Screen.Signup.route) {
+            val authViewModel: AuthViewModel = viewModel(factory = factory)
+            SignupScreen(
+                viewModel = authViewModel,
+                onNavigateToLogin = {
+                    navController.popBackStack()
+                },
+                onAuthSuccess = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 }
             )
@@ -77,7 +114,11 @@ fun AppNavigation(
                 viewModel = onboardingViewModel,
                 onNavigateNext = {
                     val isGranted = NotificationPermissionHelper.isNotificationListenerEnabled(context)
-                    val targetRoute = if (isGranted) Screen.Home.route else Screen.Permission.route
+                    val targetRoute = if (isGranted) {
+                        if (appContainer.sessionManager.isSignedIn) Screen.Home.route else Screen.Login.route
+                    } else {
+                        Screen.Permission.route
+                    }
                     navController.navigate(targetRoute) {
                         popUpTo(Screen.Onboarding.route) { inclusive = true }
                     }
@@ -90,7 +131,12 @@ fun AppNavigation(
             PermissionScreen(
                 viewModel = permissionViewModel,
                 onNavigateToHome = {
-                    navController.navigate(Screen.Home.route) {
+                    val targetRoute = if (appContainer.sessionManager.isSignedIn) {
+                        Screen.Home.route
+                    } else {
+                        Screen.Login.route
+                    }
+                    navController.navigate(targetRoute) {
                         popUpTo(Screen.Permission.route) { inclusive = true }
                     }
                 }
