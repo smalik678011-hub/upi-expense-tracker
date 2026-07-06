@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "246785166404",
+    "project_id": "upi-expense-tracker-da702",
+    "storage_bucket": "upi-expense-tracker-da702.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246785166404:android:46b06139b9d3f15b774011",
+        "android_client_info": {
+          "package_name": "com.aistudio.upiexpense.ugpxty"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfMi4fkubXszMg3HUHHj0ItBeAveRzy5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

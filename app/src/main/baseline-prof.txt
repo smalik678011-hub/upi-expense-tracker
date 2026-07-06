@@ -1,0 +1,12 @@
+# Baseline Profile for UPI Unified Expense Tracker
+
+# Baseline Profile for UPI Unified Expense Tracker
+Lcom/example/UpiExpenseApplication;
+Lcom/example/MainActivity;
+Lcom/example/core/di/AppContainer;
+Lcom/example/presentation/navigation/Screen;
+Lcom/example/presentation/screens/HomeScreenKt;
+Lcom/example/presentation/screens/HomeViewModel;
+Lcom/example/presentation/screens/FoundationDashboardScreenKt;
+Lcom/example/presentation/screens/FoundationDashboardViewModel;
+
