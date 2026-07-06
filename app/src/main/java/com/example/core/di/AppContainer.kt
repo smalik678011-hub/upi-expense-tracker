@@ -3,17 +3,20 @@ package com.example.core.di
 import android.content.Context
 import com.example.core.log.AndroidLogger
 import com.example.core.log.Logger
+import com.example.core.notification.NotificationLogger
 import com.example.core.security.SecureStorage
 import com.example.core.security.SharedPreferencesSecureStorage
+import com.example.core.session.SessionManager
 import com.example.core.utils.DefaultDispatcherProvider
 import com.example.core.utils.DispatcherProvider
-import com.example.core.notification.NotificationLogger
 import com.example.data.repository.ExpenseRepositoryImpl
+import com.example.data.repository.FirebaseAuthRepositoryImpl
 import com.example.data.repository.NotificationDispatcherImpl
 import com.example.data.repository.NotificationFilterImpl
 import com.example.data.repository.NotificationRepositoryImpl
 import com.example.data.repository.NotificationValidatorImpl
 import com.example.data.repository.SettingsRepositoryImpl
+import com.example.domain.repository.AuthRepository
 import com.example.domain.repository.ExpenseRepository
 import com.example.domain.repository.NotificationDispatcher
 import com.example.domain.repository.NotificationFilter
@@ -50,6 +53,14 @@ class AppContainer(private val context: Context) {
 
     val appPreferencesRepository: com.example.domain.repository.AppPreferencesRepository by lazy {
         com.example.data.repository.AppPreferencesRepositoryImpl(context)
+    }
+
+    val authRepository: AuthRepository by lazy {
+        FirebaseAuthRepositoryImpl()
+    }
+
+    val sessionManager: SessionManager by lazy {
+        SessionManager(authRepository)
     }
 
     val appDatabase: com.example.data.database.AppDatabase by lazy {
