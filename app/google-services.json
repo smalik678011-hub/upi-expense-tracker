@@ -12,7 +12,20 @@
           "package_name": "com.aistudio.upiexpense.ugpxty"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "246785166404-7637mj37ikufu3n0h14spuafcf6pc9gs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aistudio.upiexpense.ugpxty",
+            "certificate_hash": "3352dc17825817c52fd6ae1739e9476f13f76970"
+          }
+        },
+        {
+          "client_id": "246785166404-sq3a8otbrube4kasckbbd93dda84hs3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBfMi4fkubXszMg3HUHHj0ItBeAveRzy5U"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246785166404-sq3a8otbrube4kasckbbd93dda84hs3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
