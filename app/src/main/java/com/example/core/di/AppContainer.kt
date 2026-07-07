@@ -163,4 +163,8 @@ class AppContainer(private val context: Context) {
     val adManager: com.example.core.admob.AdManager by lazy {
         com.example.core.admob.AdManager(context, adRepository, logger)
     }
+
+    val firebaseAuth: com.google.firebase.auth.FirebaseAuth by lazy {
+        com.google.firebase.auth.FirebaseAuth.getInstance()
+    }
 }
