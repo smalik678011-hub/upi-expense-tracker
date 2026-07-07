@@ -1,5 +1,7 @@
 package com.example.presentation.screens
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,12 +29,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 
 @Composable
 fun LoginScreen(
@@ -41,6 +48,25 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val googleWebClientId = context.getString(R.string.google_web_client_id)
+    val isGoogleConfigured = googleWebClientId != "REPLACE_WITH_WEB_CLIENT_ID"
+    val googleLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val idToken = account.idToken
+            if (idToken.isNullOrBlank()) {
+                viewModel.onGoogleSignInFailed("Google login token missing. Check Firebase Web client ID.")
+            } else {
+                viewModel.signInWithGoogle(idToken)
+            }
+        } catch (exception: ApiException) {
+            viewModel.onGoogleSignInFailed("Google login cancelled or failed.")
+        }
+    }
 
     LaunchedEffect(uiState.isAuthenticated) {
         if (uiState.isAuthenticated) {
@@ -132,6 +158,27 @@ fun LoginScreen(
                     } else {
                         Text("Sign in")
                     }
+                }
+
+                OutlinedButton(
+                    onClick = {
+                        if (!isGoogleConfigured) {
+                            viewModel.onGoogleSignInFailed("Google login is not configured. Add your Firebase Web client ID.")
+                        } else {
+                            val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestIdToken(googleWebClientId)
+                                .requestEmail()
+                                .build()
+                            val googleClient = GoogleSignIn.getClient(context, options)
+                            googleClient.signOut().addOnCompleteListener {
+                                googleLauncher.launch(googleClient.signInIntent)
+                            }
+                        }
+                    },
+                    enabled = !uiState.isLoading,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Continue with Google")
                 }
 
                 OutlinedButton(
