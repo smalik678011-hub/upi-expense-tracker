@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UPI Unified Expense Tracker</string>
+    <string name="app_name">UPI Expense Tracker</string>
     
     <!-- System & Errors -->
     <string name="error_generic">Something went wrong. Please try again.</string>
@@ -14,7 +14,7 @@
     
     <!-- Showcase and Dashboard Labels -->
     <string name="status_title">Architecture Foundation status</string>
-    <string name="status_subtitle">UPI Unified Expense Tracker</string>
+    <string name="status_subtitle">UPI Expense Tracker</string>
     <string name="status_verified">Verified Stable</string>
     <string name="status_hilt_ok">Dagger Hilt injection verified</string>
     <string name="status_repo_ok">Expense repository contract registered</string>
