@@ -49,8 +49,8 @@ fun LoginScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    val googleWebClientId = context.getString(R.string.google_web_client_id)
-    val isGoogleConfigured = googleWebClientId != "REPLACE_WITH_WEB_CLIENT_ID"
+    val googleWebClientId = context.getString(R.string.default_web_client_id)
+    val isGoogleConfigured = googleWebClientId.isNotBlank()
     val googleLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
