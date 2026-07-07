@@ -2,6 +2,7 @@ package com.example.presentation.screens
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -65,6 +66,26 @@ class LoginViewModel(
                     )
                 }
             }
+    }
+
+    fun signInWithGoogle(idToken: String) {
+        _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                _uiState.value = if (task.isSuccessful) {
+                    _uiState.value.copy(isLoading = false, isAuthenticated = true)
+                } else {
+                    _uiState.value.copy(
+                        isLoading = false,
+                        errorMessage = task.exception?.localizedMessage ?: "Google login failed. Please try again."
+                    )
+                }
+            }
+    }
+
+    fun onGoogleSignInFailed(message: String) {
+        _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = message)
     }
 
     private fun validate(email: String, password: String): Boolean {
