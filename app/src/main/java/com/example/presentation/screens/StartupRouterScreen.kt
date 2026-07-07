@@ -139,7 +139,7 @@ fun StartupRouterScreen(
 
             // Main Application Title
             Text(
-                text = "UPI Unified",
+                text = "UPI Expense",
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -148,7 +148,7 @@ fun StartupRouterScreen(
             )
             
             Text(
-                text = "Expense Tracker",
+                text = "Tracker",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Light,
                 color = Color(0xFF38BDF8), // Electric blue accent
@@ -178,4 +178,3 @@ fun StartupRouterScreen(
         }
     }
 }
-
