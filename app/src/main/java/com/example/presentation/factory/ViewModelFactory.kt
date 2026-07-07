@@ -32,6 +32,11 @@ class ViewModelFactory(
                     appPreferencesRepository = appContainer.appPreferencesRepository
                 ) as T
             }
+            modelClass.isAssignableFrom(com.example.presentation.screens.LoginViewModel::class.java) -> {
+                com.example.presentation.screens.LoginViewModel(
+                    auth = appContainer.firebaseAuth
+                ) as T
+            }
             modelClass.isAssignableFrom(com.example.presentation.screens.PermissionViewModel::class.java) -> {
                 com.example.presentation.screens.PermissionViewModel(
                     appPreferencesRepository = appContainer.appPreferencesRepository
