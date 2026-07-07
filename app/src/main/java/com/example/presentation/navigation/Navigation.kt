@@ -14,6 +14,7 @@ import com.example.presentation.factory.ViewModelFactory
 import com.example.presentation.screens.*
 
 sealed class Screen(val route: String) {
+    object Login : Screen("login")
     object StartupRouter : Screen("startup_router")
     object Onboarding : Screen("onboarding")
     object Permission : Screen("permission")
@@ -46,9 +47,21 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.StartupRouter.route,
+        startDestination = Screen.Login.route,
         modifier = modifier
     ) {
+        composable(Screen.Login.route) {
+            val loginViewModel: LoginViewModel = viewModel(factory = factory)
+            LoginScreen(
+                viewModel = loginViewModel,
+                onAuthenticated = {
+                    navController.navigate(Screen.StartupRouter.route) {
+                        popUpTo(Screen.Login.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(Screen.StartupRouter.route) {
             val onboardingViewModel: OnboardingViewModel = viewModel(factory = factory)
             StartupRouterScreen(
